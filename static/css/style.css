@@ -1,0 +1,21 @@
+.history-container {
+    max-height: 100px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    margin-bottom: -2px;
+    padding-bottom: 0px;
+}
+
+#math-field-container {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.keyboard-button {
+    margin-bottom: -1px;
+}

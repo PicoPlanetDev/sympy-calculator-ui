@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'mathquill-0.10.1/mathquill.css') }}" />
+    <script src="{{ url_for('static', filename= 'js/jquery-3.6.0.min.js') }}"></script>
+    <!-- Technically should be 1.11.0 -->
+    <script src="{{ url_for('static', filename= 'mathquill-0.10.1/mathquill.js') }}"></script>
+    <!-- CSS only -->
+    <link href="{{ url_for('static', filename= 'bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename= 'bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+</head>
+
+<body>
+    <main class="px-1 py-1">
+        <div class="col-sm-5 mx-auto">
+            <div class="form-control history-container">
+                <div id="history">
+
+                </div>
+            </div>
+
+            <div class="form-control mb-3" id="math-field-container">
+                <span id="math-field"></span>
+            </div>
+
+            <div id="keyboard">
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button keyboard-button"
+                            onClick='command("^")'>^</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\frac")'>÷</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\nthroot")'><sup>n</sup>√□</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\e")'>e</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\|")'>|□|</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\sin")'>sin</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='typeText("^2");'>□<sup>2</sup></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("*")'>×</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\sqrt")'>√□</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("i")'>i</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='typeText("lim_{}");key("Left");command("\\to");key("Left");'>lim</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\cos")'>cos</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='typeText("e");command("^")'>e<sup>□</sup></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("-")'>-</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("ln")'>ln</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\pi")'>π</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\frac");command("d");key("Down");command("d");'><sup>d</sup>/<sub>dx</sub></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\tan")'>tan</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-2 keyboard-button"
+                            onClick='typeText("10");command("^");'>10<sup>□</sup></button>
+                        <button type="button" class="btn btn-outline-secondary col-2 keyboard-button"
+                            onClick='command("+")'>+</button>
+                        <button type="button" class="btn btn-outline-secondary col-2 keyboard-button"
+                            onClick='command("\\log")'>log</button>
+                        <button type="button" class="btn btn-outline-secondary col-2 keyboard-button"
+                            onClick='command("\\infinity")'>∞</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='typeText("\\int_{}^{}");'>∫<sub>a</sub><sup>b</sup></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\int")'>∫</button>
+                        <button type="button" class="btn btn-outline-secondary col-2 keyboard-button"
+                            onClick='command("\\theta")'>θ</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\lt");'>
+                            &lt</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\gt");'>
+                            &gt</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\leq")'>≤</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("\\geq")'>≥</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick='command("=")'>=</button>
+                        <button type="button" class="btn btn-secondary col-1 keyboard-button"
+                            onClick='submit()'>enter</button>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-3">
+                Latex:
+                <span id="latex-field" class="font-monospace"></span>
+            </p>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename= 'js/input.js') }}"></script>
+</body>
+
+</html>

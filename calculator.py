@@ -19,6 +19,7 @@ def print_latex(expr):
 def plot(input):
     simplified = simplify(input)
     p1 = sympy.plotting.plot(simplified, show=False)
+    check_plot_direrctory()
     plot_path = f"static/plot/{time.time()}.plot.png"
     p1.save(plot_path)
     return plot_path

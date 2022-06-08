@@ -31,20 +31,43 @@ function clear() {
     mathField.focus()
 }
 
-function submit() {
+function submit(intent = "doit") {
     var latex = mathField.latex()
     console.log(latex)
-    $.ajax({
-        type: "POST",
-        url: "/evaluate",
-        data: JSON.stringify({ "input": latex }),
-        contentType: "application/json",
-        dataType: "json",
-        success: function (result) {
-            add_history(latex, result)
-            clear()
-        }
-    });
+    if (intent == "doit") {
+        $.ajax({
+            type: "POST",
+            url: "/evaluate",
+            data: JSON.stringify({ "input": latex }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                add_history(latex, result)
+                clear()
+            },
+            error: function (result) {
+                console.log(result)
+                add_history(latex, "Error: " + result.responeText)
+            }
+        });
+    }
+    else if (intent == "plot") {
+        $.ajax({
+            type: "POST",
+            url: "/plot",
+            data: JSON.stringify({ "input": latex }),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (image) {
+                add_history_image(latex, image)
+                clear()
+            },
+            error: function (result) {
+                console.log(result)
+                add_history(latex, "Error: " + result.responeText)
+            }
+        });
+    }
 }
 
 function add_history(input, result) {
@@ -67,6 +90,38 @@ function add_history(input, result) {
     history_result_container.className = 'history-result-container col'
     history_result.className = 'history-result'
     MQ.StaticMath(history_result).latex(result)
+    history_result_container.appendChild(history_result)
+
+
+    // Get the entire history div and append the new entry
+    var history = document.getElementById('history')
+    history.appendChild(history_entry)
+
+    history_entry.appendChild(history_input_container) // Add the input
+    history_entry.appendChild(history_result_container) // Add the result
+    history_entry.appendChild(history_entry_hr) // Add the horizontal rule
+}
+
+function add_history_image(input, image) {
+    // Create an new history entry
+    var history_entry = document.createElement('div')
+    history_entry.className = 'history-entry'
+    // Add a horizontal rule for the entry
+    var history_entry_hr = document.createElement('hr')
+    history_entry_hr.style.margin = '0px'
+
+    var history_input_container = document.createElement('div')
+    var history_input = document.createElement('span')
+    history_input_container.className = 'history-input-container'
+    history_input.className = 'history-input'
+    MQ.StaticMath(history_input).latex(input)
+    history_input_container.appendChild(history_input)
+
+    var history_result_container = document.createElement('div')
+    var history_result = document.createElement('img')
+    history_result_container.className = 'history-result-container'
+    history_result.className = 'history-result-image'
+    history_result.src = $SCRIPT_ROOT + '/' + image
     history_result_container.appendChild(history_result)
 
 

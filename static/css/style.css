@@ -1,5 +1,10 @@
+@media screen and (device-height: 480px) {
+    .history-container {
+        height: 170px;
+    }
+}
+
 .history-container {
-    max-height: 100px;
     overflow-y: auto;
     display: flex;
     flex-direction: column-reverse;
@@ -9,6 +14,11 @@
 
     margin-bottom: -2px;
     padding-bottom: 0px;
+}
+
+.history-result-image {
+    width: 100%;
+    height: auto;
 }
 
 #math-field-container {

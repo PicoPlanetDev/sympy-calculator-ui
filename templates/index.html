@@ -33,6 +33,22 @@
                 <div class="row">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-outline-secondary col-1 keyboard-button keyboard-button"
+                            onClick='submit(intent="plot")'>Plot</button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick=''></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick=''></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick=''></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick=''></button>
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
+                            onClick=''></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary col-1 keyboard-button keyboard-button"
                             onClick='command("^")'>^</button>
                         <button type="button" class="btn btn-outline-secondary col-1 keyboard-button"
                             onClick='command("\\frac")'>÷</button>
@@ -122,6 +138,9 @@
             </p>
         </div>
     </main>
+    <script>
+        $SCRIPT_ROOT = {{ root | tojson | safe }};
+    </script>
     <script src="{{ url_for('static', filename= 'js/input.js') }}"></script>
 </body>
 
